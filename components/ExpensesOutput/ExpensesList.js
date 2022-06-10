@@ -7,6 +7,7 @@ function renderExpenseItem(itemData) {
     description={itemData.item.description}
     amount={itemData.item.amount}
     date={itemData.item.date}
+    id={itemData.item.id}
     />
   );
 }
