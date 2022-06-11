@@ -10,6 +10,8 @@ import ExpenseForm from "../components/ManageExpense/ExpenseForm";
 function ManageExpense({ route, navigation }) {
   // const editedExpenseId = route.params?.expenseId;
   // const isEditing = !!editedExpenseId;
+  
+  const expensesCtx = useContext(ExpensesContext);
 
   const checkEditing = route.params?.editItem;
   const isEditing = !!checkEditing;
@@ -17,11 +19,16 @@ function ManageExpense({ route, navigation }) {
   console.log(isEditing);
 
   if (isEditing) {
-    const expenseID = route.params.expenseID;
+    var expenseID = route.params.expenseID;
     console.log("Expense ID:", expenseID);
   }
 
-  const expensesCtx = useContext(ExpensesContext);
+  const selectedExpense = expensesCtx.expenses.find(
+    (expense) => expense.id === expenseID
+  );
+
+
+
 
   // navigation.setOptions({
   //   title: isEditing ? "Edit Expense" : "Add Expense"
@@ -59,6 +66,7 @@ function ManageExpense({ route, navigation }) {
         onCancel={cancelHandler}
         onSubmit={confirmHandler}
         submitButtonLabel={isEditing ? "Update" : "Add"}
+        defaultValues={selectedExpense}
       />
 
       {isEditing && (
