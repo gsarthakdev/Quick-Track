@@ -1,5 +1,5 @@
 import { Text, View, StyleSheet } from "react-native";
-import { useLayoutEffect, useContext } from "react";
+import { useLayoutEffect, useContext, useState } from "react";
 import IconButton from "../components/UI/IconButton";
 import { GlobalStyles } from "../constants/styles";
 import Button from "../components/UI/Button";
@@ -7,11 +7,14 @@ import { ExpensesContext } from "../store/expenses-context";
 import { useRoute } from "@react-navigation/native";
 import ExpenseForm from "../components/ManageExpense/ExpenseForm";
 import { storeExpense, updateExpense, deleteExpense } from "../util/http";
+import LoadingOverlay from "../components/UI/LoadingOverlay";
+import ErrorOverlay from "../components/UI/ErrorOverlay";
 
 function ManageExpense({ route, navigation }) {
   // const editedExpenseId = route.params?.expenseId;
   // const isEditing = !!editedExpenseId;
-
+  const [isSubmitting, setIsSubmitting] = useState(false);
+  const [error, setError] = useState();
   const expensesCtx = useContext(ExpensesContext);
 
   const checkEditing = route.params?.editItem;
@@ -40,9 +43,15 @@ function ManageExpense({ route, navigation }) {
 
   async function deleteExpenseHander() {
     const expenseID = route.params.expenseID;
-    await deleteExpense(expenseID)
-    expensesCtx.deleteExpense(expenseID);
-    navigation.goBack();
+    setIsSubmitting(true);
+    try {
+      await deleteExpense(expenseID);
+      expensesCtx.deleteExpense(expenseID);
+      navigation.goBack();
+    } catch (error) {
+      setError("Could not delete expense - please try again later!");
+      setIsSubmitting(false);
+    }
   }
 
   function cancelHandler() {
@@ -50,15 +59,33 @@ function ManageExpense({ route, navigation }) {
   }
 
   async function confirmHandler(expenseData) {
-    if (isEditing) {
-      const expenseID = route.params.expenseID;
-      expensesCtx.updateExpense(expenseID, expenseData);
-      await updateExpense(expenseID, expenseData); //by adding await, the modal will only close once the expense is updated to Firebase
-    } else {
-      const id = await storeExpense(expenseData);
-      expensesCtx.addExpense({ ...expenseData, id: id });
+    setIsSubmitting(true);
+    try {
+      if (isEditing) {
+        const expenseID = route.params.expenseID;
+        expensesCtx.updateExpense(expenseID, expenseData);
+        await updateExpense(expenseID, expenseData); //by adding await, the modal will only close once the expense is updated to Firebase
+      } else {
+        const id = await storeExpense(expenseData);
+        expensesCtx.addExpense({ ...expenseData, id: id });
+      }
+      navigation.goBack();
+    } catch (error) {
+      setError('Could not save data - please try again later!');
+      setIsSubmitting(false);
     }
-    navigation.goBack();
+  }
+
+  function errorHandler() {
+    setError(null);
+  }
+
+  if (error && !isSubmitting) {
+    return <ErrorOverlay message={error} onConfirm={errorHandler} />;
+  }
+
+  if (isSubmitting) {
+    return <LoadingOverlay />;
   }
 
   return (
