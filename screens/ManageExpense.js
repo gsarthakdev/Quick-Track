@@ -6,11 +6,12 @@ import Button from "../components/UI/Button";
 import { ExpensesContext } from "../store/expenses-context";
 import { useRoute } from "@react-navigation/native";
 import ExpenseForm from "../components/ManageExpense/ExpenseForm";
+import { storeExpense } from "../util/http";
 
 function ManageExpense({ route, navigation }) {
   // const editedExpenseId = route.params?.expenseId;
   // const isEditing = !!editedExpenseId;
-  
+
   const expensesCtx = useContext(ExpensesContext);
 
   const checkEditing = route.params?.editItem;
@@ -26,9 +27,6 @@ function ManageExpense({ route, navigation }) {
   const selectedExpense = expensesCtx.expenses.find(
     (expense) => expense.id === expenseID
   );
-
-
-
 
   // navigation.setOptions({
   //   title: isEditing ? "Edit Expense" : "Add Expense"
@@ -50,12 +48,13 @@ function ManageExpense({ route, navigation }) {
     navigation.goBack();
   }
 
-  function confirmHandler(expenseData) {
+  async function confirmHandler(expenseData) {
     if (isEditing) {
       const expenseID = route.params.expenseID;
       expensesCtx.updateExpense(expenseID, expenseData);
     } else {
-      expensesCtx.addExpense(expenseData);
+      const id = await storeExpense(expenseData);
+      expensesCtx.addExpense({ ...expenseData, id: id });
     }
     navigation.goBack();
   }
