@@ -6,7 +6,7 @@ import Button from "../components/UI/Button";
 import { ExpensesContext } from "../store/expenses-context";
 import { useRoute } from "@react-navigation/native";
 import ExpenseForm from "../components/ManageExpense/ExpenseForm";
-import { storeExpense } from "../util/http";
+import { storeExpense, updateExpense, deleteExpense } from "../util/http";
 
 function ManageExpense({ route, navigation }) {
   // const editedExpenseId = route.params?.expenseId;
@@ -38,8 +38,9 @@ function ManageExpense({ route, navigation }) {
     });
   }, [isEditing]);
 
-  function deleteExpenseHander() {
+  async function deleteExpenseHander() {
     const expenseID = route.params.expenseID;
+    await deleteExpense(expenseID)
     expensesCtx.deleteExpense(expenseID);
     navigation.goBack();
   }
@@ -52,6 +53,7 @@ function ManageExpense({ route, navigation }) {
     if (isEditing) {
       const expenseID = route.params.expenseID;
       expensesCtx.updateExpense(expenseID, expenseData);
+      await updateExpense(expenseID, expenseData); //by adding await, the modal will only close once the expense is updated to Firebase
     } else {
       const id = await storeExpense(expenseData);
       expensesCtx.addExpense({ ...expenseData, id: id });
