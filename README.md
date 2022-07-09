@@ -42,9 +42,6 @@ Add an expense:
 
 ![image](https://user-images.githubusercontent.com/63082917/178120564-adb96770-9cfe-4df7-88c9-8d768a78a449.png)
 
+• The buttons in this app, for example, the "Add", "Update" and "Cancel" buttons were created as custom components using the latest Pressable API. 
 
-
- 
-
-
-
+• The text inputs use form validation with custom created rules to ensure that the fields are validated before being sent to the backend database.
