@@ -25,11 +25,26 @@ Ultimately, I worked on developing each feature step-by-step with strict time fr
 
 View your recent expenses in the current week at a glance:
 
+![image](https://user-images.githubusercontent.com/63082917/178117422-96cdc47a-89b8-45ab-af1a-234266e5d0b6.png)
+
+
 View all your expenses in a informative UI:
+
+![image](https://user-images.githubusercontent.com/63082917/178117465-7d810a0f-6026-4fe5-8f5c-cabcfef5865a.png)
+
 
 Tap on an expense to edit or delete it:
 
-Add an expense: 
+![App Demo GIF](https://user-images.githubusercontent.com/63082917/178120492-1cc058bf-2fb3-4c90-84c2-e1a15ba35584.gif)
+
+
+Add an expense:
+
+![image](https://user-images.githubusercontent.com/63082917/178120564-adb96770-9cfe-4df7-88c9-8d768a78a449.png)
+
+
+
+ 
 
 
 
