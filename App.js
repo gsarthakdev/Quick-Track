@@ -21,8 +21,19 @@ function ExpensesOverview() {
       screenOptions={({ navigation }) => ({
         headerStyle: { backgroundColor: GlobalStyles.colors.primary500 },
         headerTintColor: "white",
-        tabBarStyle: { backgroundColor: GlobalStyles.colors.primary500 },
-        tabBarActiveTirntColor: GlobalStyles.colors.accent500,
+        tabBarStyle: {
+          backgroundColor: GlobalStyles.colors.primary500,
+          height: 60,
+          position: "absolute",
+          margin: 16,
+          paddingBottom: 2,
+          borderRadius: 16,
+          borderTopColor: "transparent",
+          overflow: 'visible',
+          zIndex: 20
+        },
+        tabBarActiveTintColor: GlobalStyles.colors.accent500,
+        tabBarInactiveTintColor: 'white',
         headerRight: ({ tintColor }) => (
           <IconButton
             iconName="add-circle"

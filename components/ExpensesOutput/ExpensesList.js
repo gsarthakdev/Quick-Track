@@ -1,4 +1,4 @@
-import { FlatList } from "react-native";
+import { FlatList, ScrollView } from "react-native";
 import ExpenseItem from "./ExpenseItem";
 
 function renderExpenseItem(itemData) {
@@ -14,11 +14,16 @@ function renderExpenseItem(itemData) {
 
 function ExpensesList({ expenses }) {
   return (
+    // <ScrollView nestedScrollEnabled={true}>
     <FlatList
       data={expenses}
       renderItem={renderExpenseItem}
       keyExtractor={(item) => item.id}
+      contentContainerStyle={{
+        paddingBottom: 75
+      }}
     />
+    // </ScrollView>
   );
 }
 
