@@ -13,7 +13,7 @@ Quick Track - The perfect solution for tracking/managing your expenses! All data
 
 # 📚MVC Design Pattern
 This app implements the use of MVC architecture, in which the controller (logic in code) communicates with the model (Realtime Database) and view (React Native JSX).
-This allows for a clean separation of concerns (SoC), and the ability to support multiple views with the application.
+This allows for a clean separation of concerns (SoC), and the ability to support multiple views within the application.
 
 # 🧠Agile Methodology
 To develop this application I worked in sprints, meaning that I worked on one feature, tested it to verify if it works as expected, and then moved onto the
